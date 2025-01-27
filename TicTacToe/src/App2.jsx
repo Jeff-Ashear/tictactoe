@@ -31,9 +31,9 @@ export default function Board() {
     setSquares(nextSquares)
     setXIsNext(!xIsNext)
 
-    calculateWinner(nextSquares)
+    calculateWinner(squares)
     //make a new array with the x's and o's in position at the index that matches the position of the square that was clicked
-
+    
   }
 
   return (
@@ -71,6 +71,6 @@ function calculateWinner(nextSquares) {
 
   //compare the state of the board to the endConditions each time a square is clicked
   for (let i = 0; i < nextSquares.length; i++) {
-      console.log(nextSquares)
+   
   }
 }
