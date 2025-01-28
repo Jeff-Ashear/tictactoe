@@ -58,7 +58,7 @@ export default function Board() {
 }
 
 function calculateWinner(nextSquares) {
-  let endConditions = [
+  let winConditions = [
     [0,1,2],
     [0,3,6],
     [0,4,8],
@@ -68,9 +68,20 @@ function calculateWinner(nextSquares) {
     [3,4,5],
     [6,7,8]
   ]
+  
+  let winner = ""
 
-  //compare the state of the board to the endConditions each time a square is clicked
-  for (let i = 0; i < nextSquares.length; i++) {
-      console.log(nextSquares)
+  for (let i = 0; i < winConditions.length; i++) {
+      if (nextSquares[winConditions[i][0]] === 'X' && nextSquares[winConditions[i][1]] === 'X' && nextSquares[winConditions[i][2]] === 'X') {
+        winner = 'X'
+      }
+      else if (nextSquares[winConditions[i][0]] === 'O' && nextSquares[winConditions[i][1]] === 'O' && nextSquares[winConditions[i][2]] === 'O') {
+        winner = 'O'
+      }
+      
+      if (winner) {
+        console.log(winner, ' wins!')
+      }
+
   }
 }
