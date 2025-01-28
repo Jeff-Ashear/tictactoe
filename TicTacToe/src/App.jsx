@@ -10,12 +10,14 @@ function Square({ value, onSquareClick }) {
 }
 
 
+
 export default function Board() {
   const [xIsNext, setXIsNext] = useState(true)
   const [squares, setSquares] = useState(Array(9).fill(null))
 
+
   function handleClick(i) { 
-    if (squares[i]) {
+    if (calculateWinner(squares) || squares[i]) {
       return
     }
 
@@ -31,13 +33,21 @@ export default function Board() {
     setSquares(nextSquares)
     setXIsNext(!xIsNext)
 
-    calculateWinner(nextSquares)
-    //make a new array with the x's and o's in position at the index that matches the position of the square that was clicked
+    const winner = calculateWinner(squares)
+    // let statusG = "Status"
+
+    // if (winner) {
+    //   statusG = 'Winner: ' + winner;
+    // } else {
+    //   statusG = 'Next player: ' + (xIsNext ? 'X' : '0')
+    // }
 
   }
 
+
   return (
     <>
+      {/* <div className="statusG">{statusG}</div> */}
       <div className="board-row">
         <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
         <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
@@ -52,13 +62,13 @@ export default function Board() {
         <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
         <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
         <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
-      </div>     
+      </div>    
     </>
   )
 }
 
-function calculateWinner(nextSquares) {
-  let winConditions = [
+function calculateWinner(squares) {
+  const lines = [
     [0,1,2],
     [0,3,6],
     [0,4,8],
@@ -68,20 +78,13 @@ function calculateWinner(nextSquares) {
     [3,4,5],
     [6,7,8]
   ]
-  
-  let winner = ""
 
-  for (let i = 0; i < winConditions.length; i++) {
-      if (nextSquares[winConditions[i][0]] === 'X' && nextSquares[winConditions[i][1]] === 'X' && nextSquares[winConditions[i][2]] === 'X') {
-        winner = 'X'
-      }
-      else if (nextSquares[winConditions[i][0]] === 'O' && nextSquares[winConditions[i][1]] === 'O' && nextSquares[winConditions[i][2]] === 'O') {
-        winner = 'O'
-      }
-      
-      if (winner) {
-        console.log(winner, ' wins!')
-      }
-
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i]
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      console.log(squares[a], "wins!")
+      return squares[a]
+    }
   }
+  return null
 }
